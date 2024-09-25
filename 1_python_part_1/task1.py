@@ -13,16 +13,16 @@ Examples:
 '''
 from typing import List, Any
 
+def delete_from_list(list_to_clean: List[Any], item_to_delete: Any) -> List[Any]:
+    try:
+        # Keep removing elements as long as they exist
+        while True:
+            list_to_clean.pop(list_to_clean.index(item_to_delete))
+    except ValueError:
+        # Stop when the element is no longer in the list
+        pass
+    return list_to_clean
 
-def delete_from_list(list_to_clean: List, item_to_delete: Any) -> List:
-    i=0
-    while i<len(list_to_clean):
-        if list_to_clean[i]==item_to_delete:
-            list_to_clean.pop(i)
-
-        i=i+1
-    print(list_to_clean)
-            
             
         
 
