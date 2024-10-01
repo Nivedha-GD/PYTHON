@@ -1,34 +1,36 @@
 """
-Write tests for division() function in 2_python_part_2/task_exceptions.py
-In case (1,1) it should check if exception were raised
-In case (1,0) it should check if return value is None and "Division by 0" printed
-If other cases it should check if division is correct
-
-TIP: to test output of print() function use capfd fixture
-https://stackoverflow.com/a/20507769
+Write a function which divides x by y.
+If y == 0 it should print "Division by 0" and return None
+elif y == 1 it should raise custom Exception with "Deletion on 1 get the same result" text
+else it should return the result of division
+In all cases it should print "Division finished"
+    >>> division(1, 0)
+    Division by 0
+    Division finished
+    >>> division(1, 1)
+    Division finished
+    DivisionByOneException("Deletion on 1 get the same result")
+    >>> division(2, 2)
+    1
+    Division finished
 """
-
 import typing
-import pytest
-from task_exceptions import division, DivisionByOneException
-
-def test_division_ok(capfd):
-    result = division(4, 2)
-    out, _ = capfd.readouterr()
-    assert result == 2
-    assert out == "Division finished\n"  
-    
-def test_division_by_zero(capfd):
-    result = division(1, 0)
-    out, _ = capfd.readouterr()
-    assert result is None
-    assert out == "Division by 0\nDivision finished\n"
-
-def test_division_by_one(capfd):
-    with pytest.raises(DivisionByOneException) as exc_info:
-        division(1, 1)
-    
-    assert str(exc_info.value) == "Deletion on 1 gets the same result"
-    
-    out, _ = capfd.readouterr()
-    assert out == "Division finished\n"  
+class DivisionByOneException(Exception):
+    pass
+def division(x: int, y: int) -> typing.Union[None, float]:
+    if y == 0:
+        print("Division by 0")
+        return None
+    elif y == 1:
+        raise DivisionByOneException("Deletion on 1 gets the same result")
+    else:
+        result = x / y
+        print(result)
+    print("Division finished")
+    return result
+print(division(1, 0))
+try:
+    print(division(1, 1))
+except DivisionByOneException as e:
+    print(e)
+print(division(2, 2))
